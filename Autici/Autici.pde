@@ -17,11 +17,17 @@ float obstacleSpeed = 1;
 
 //ostale
 int score;
-
+SoundFile gameMusic;
 
 //---------------------------------------------------SLIKE---------------------------------------------------//
-PImage carImg;
+PImage carImg,backgroundImage;
 PImage[] obstacleImages = new PImage[numOfObstacles];
+
+
+//---------------------------------------------------KLASE---------------------------------------------------//
+Home home;
+boolean isHome = true;
+boolean isGame = false;
 
 //-------------------------------------------------SETUP-------------------------------------------------//
 void setup()
@@ -30,10 +36,17 @@ void setup()
   size(550,750);
   
   //ucitavanje SLIKA
+  //pozadina
+  backgroundImage = loadImage("cesta2.jpg"); 
+  backgroundImage.resize(width, height);
+  
+  //autic
   carImg = loadImage("car.png"); 
   carImg.resize(75, 75);
   carCoordinateX = width/2-40;
   carCoordinateY = height-100;
+  
+  //prepreke
   for(int i=0; i<numOfObstacles; i++)
   { 
     obstacleImages[i] = loadImage("obstacle" + i + ".png"); 
@@ -49,12 +62,27 @@ void setup()
       obstacleCoordinateY[i] = random(-500, -100);//random(-500, -100); //po ekranu
       // treba li mi polje obstacle size obstacleSize[i] = int(random(30, 60));
   }
+  
+  //glazba
+  //gameMusic=new SoundFile(this, "game_music.mp3");
+  //gameMusic.play();
+  //gameMusic.loop();
+  
+  //home
+  home=new Home();
 }
 
+
+//-------------------------------------------------DRAW-------------------------------------------------//
 void draw()
 {
+  if(isHome){
+    home.drawHome();
+    
+  }
+  else if(isGame){
   //pozadina
-  background(0,255,0);
+  background(backgroundImage);
 
   //pomak autica prema gore je automatski
   carCoordinateY -= carSpeed;
@@ -85,10 +113,12 @@ void draw()
   
   // Increment the score
   score++;
+  }
 
 }
 
 
+//-------------------------------------------------keyPressed-------------------------------------------------//
 //kretanje autica gore, dolje, lijevo i desno na pritisak tipki
 void keyPressed()
 {
@@ -96,15 +126,31 @@ void keyPressed()
   if (keyCode == DOWN) { carCoordinateY += 10; }
   if (keyCode == LEFT) { carCoordinateX -= 35; } 
   if (keyPressed && keyCode == RIGHT) { carCoordinateX += 35; }
+  
+  
+}
+
+
+//-------------------------------------------------mousePressed-------------------------------------------------//
+void mousePressed()
+{
+ 
+  if(isHome){
+    home.mousePressed();
+  }
+  
 }
 
 void gameOver()
 {
   noLoop();
+  gameMusic.stop();
   textSize(50);
   text("GAME OVER!", width/2-100, height/2);
 } 
 
+
+//-------------------------------------------------drawAndCheckObstacles-------------------------------------------------//
 void drawAndCheckObstacles()
 {
   //prepreke
