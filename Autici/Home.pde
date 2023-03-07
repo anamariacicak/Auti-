@@ -32,6 +32,8 @@ class Home
   
     background(255);
     drawButton(labelsForButtons, x, y);
+    
+    gameMusic.stop();
   
   }
   
@@ -51,9 +53,9 @@ class Home
   void mousePressed()
   {
     boolean mouseXCoordinate =  mouseX >= x && mouseX <= x + buttonWidth;
-    if(mouseXCoordinate && mouseY >= y + 0*spaceBetweenButtons && mouseY <= y + buttonHeight + 0*spaceBetweenButtons) { isGame = true; isHome=false; } //ako je nula onda je prvi gumb
-    else if(mouseXCoordinate && mouseY >= y + 1*spaceBetweenButtons && mouseY <= y + buttonHeight + 1*spaceBetweenButtons) { isGame = true; isHome=false; } //settings
-    else if(mouseXCoordinate && mouseY >= y + 2*spaceBetweenButtons && mouseY <= y + buttonHeight + 2*spaceBetweenButtons) { isGame = true; isHome=false;} //leaderboard
+    if(mouseXCoordinate && mouseY >= y + 0*spaceBetweenButtons && mouseY <= y + buttonHeight + 0*spaceBetweenButtons) { isPlayGame = true; isHome=false; } //ako je nula onda je prvi gumb
+    else if(mouseXCoordinate && mouseY >= y + 1*spaceBetweenButtons && mouseY <= y + buttonHeight + 1*spaceBetweenButtons) { isPlayGame = true; isHome=false; } //settings
+    else if(mouseXCoordinate && mouseY >= y + 2*spaceBetweenButtons && mouseY <= y + buttonHeight + 2*spaceBetweenButtons) { isPlayGame = true; isHome=false;} //leaderboard
     else if(mouseXCoordinate && mouseY >= y + 3*spaceBetweenButtons && mouseY <= y + buttonHeight + 3*spaceBetweenButtons) { exit(); } //exit
   
   }
