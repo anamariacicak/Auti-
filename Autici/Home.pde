@@ -30,10 +30,12 @@ class Home
   void drawHome()
   {
   
+    pushMatrix();
     background(255);
     drawButton(labelsForButtons, x, y);
-    
-    gameMusic.stop();
+    popMatrix();
+   
+    //gameMusic.stop();
   
   }
   
@@ -42,11 +44,14 @@ class Home
 
     for(int i=0; i<labelsForButtons.length; i++)
     {
+      pushMatrix();
+      strokeWeight(0);
       boolean mouseOver = mouseX >= x && mouseX <= x + buttonWidth && mouseY >= y + i*spaceBetweenButtons && mouseY <= y + buttonHeight + i*spaceBetweenButtons;
       fill(mouseOver ? #999999 : #CCCCCC);
       rect(x, y + i*spaceBetweenButtons, buttonWidth, buttonHeight);
       fill(0);
       text(labelsForButtons[i], x + buttonWidth / 2, y + buttonHeight / 2  + i*spaceBetweenButtons);
+      popMatrix();
     }
   }
   

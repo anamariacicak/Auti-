@@ -1,11 +1,11 @@
 import processing.sound.*;
 
-SoundFile gameMusic;
+//SoundFile gameMusic;
 
 //---------------------------------------------------KLASE---------------------------------------------------//
 Home home;
 boolean isHome = true;
-PlayGame play;
+PlayGame playGame;
 boolean isPlayGame = false;
 
 //-------------------------------------------------SETUP-------------------------------------------------//
@@ -15,20 +15,15 @@ void setup()
   size(550,750);
   
   //glazba
-  gameMusic=new SoundFile(this, "game_music.mp3");
-  //gameMusic.play();
-  //gameMusic.loop();
+  // gameMusic=new SoundFile(this, "game_music.mp3");
+
   
   //home
   home = new Home();
   
   //play
-  play = new PlayGame();
+  playGame = new PlayGame();
   
-  if(isPlayGame){
-    gameMusic.play();
-    gameMusic.loop();
-  }
 }
 
 
@@ -40,7 +35,7 @@ void draw()
    
   }
   else if(isPlayGame){
-    play.drawPlayGame();
+    playGame.drawPlayGame();
   }
 
 }
@@ -51,7 +46,7 @@ void draw()
 void keyPressed()
 {
   if(isPlayGame){
-    play.keyPressed();
+    playGame.keyPressed();
   }
   
 }
@@ -65,14 +60,32 @@ void mousePressed()
     home.mousePressed();
   }
   
+  if(isPlayGame){
+    playGame.mousePressed();  
+  }
+  
 }
+
+//fja za prepoznavanje je li stisnut gumb za povratak na Home
+boolean overButton(float x, float y, float diam) {
+  float distX = x - mouseX;
+  float distY = y - mouseY;
+  if (sqrt(sq(distX) + sq(distY)) < diam/2 ) { return true; } 
+  else { return false; }
+}
+
+
 
 void gameOver()
 {
   noLoop();
-  //gameMusic.stop();
+  
+  //prilikom gameovera treba inicijalizirati novu igru
+  playGame = new PlayGame();
+  //gameMusic.stop(); //MUSIC
   textSize(50);
   text("GAME OVER!", width/2-100, height/2);
+  
 } 
 
 
