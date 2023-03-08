@@ -1,12 +1,18 @@
 import processing.sound.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 //SoundFile gameMusic;
+
+String[] lines;
 
 //---------------------------------------------------KLASE---------------------------------------------------//
 Home home;
 boolean isHome = true;
 PlayGame playGame;
 boolean isPlayGame = false;
+GameOver gameOver;
+boolean isGameOver = false;
 
 //-------------------------------------------------SETUP-------------------------------------------------//
 void setup()
@@ -23,6 +29,23 @@ void setup()
   
   //play
   playGame = new PlayGame();
+  
+  
+  //ucitavanje txt
+  String data = "Hello, world1!"; // The string you want to store
+  lines = loadStrings("output.txt");
+  PrintWriter writer = createWriter("output.txt"); // Create a new text file
+  for(int i = 0; i < lines.length  ; i++){
+      String[] spl = split(lines[i],"\n"); //splitanje novog reda"
+      writer.println(String.valueOf(spl[0]));;
+  }
+  writer.println(data);
+  writer.println("data2345");// Write the string into the file
+  writer.flush(); // Flush the output to the file*/
+  writer.close(); // Close the file
+  
+
+
   
 }
 
@@ -81,11 +104,12 @@ void gameOver()
   noLoop();
   
   //prilikom gameovera treba inicijalizirati novu igru
+  //TO DO dodati polje za ime i potvrdu spremanja hs
   playGame = new PlayGame();
   //gameMusic.stop(); //MUSIC
   textSize(50);
   text("GAME OVER!", width/2-100, height/2);
-  
+  //TO DO dodati mogucnost odabira nove igre ili exita
 } 
 
 
