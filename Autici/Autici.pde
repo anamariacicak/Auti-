@@ -6,6 +6,10 @@ import java.io.FileWriter;
 
 String[] lines;
 
+int buttonWidth, buttonHeight, spaceBetweenButtons;
+
+int score;
+
 //---------------------------------------------------KLASE---------------------------------------------------//
 Home home;
 boolean isHome = true;
@@ -13,52 +17,58 @@ PlayGame playGame;
 boolean isPlayGame = false;
 GameOver gameOver;
 boolean isGameOver = false;
+//Settings settings;
+boolean isSettings = false;
+LeaderBoard leaderBoard;
+boolean isLeadBoard = false;
 
 //-------------------------------------------------SETUP-------------------------------------------------//
-void setup()
+void setup() //INICIJALZICAIJA
 {
 
   size(550,750);
   
   //glazba
   // gameMusic=new SoundFile(this, "game_music.mp3");
+  
+  //buttonsi
+  buttonHeight=50;
+  spaceBetweenButtons = 80;
 
-  
   //home
-  home = new Home();
-  
+  home = new Home(); 
   //play
   playGame = new PlayGame();
   
+  //gameOver
+  gameOver = new GameOver();
   
-  //ucitavanje txt
-  String data = "Hello, world1!"; // The string you want to store
-  lines = loadStrings("output.txt");
-  PrintWriter writer = createWriter("output.txt"); // Create a new text file
-  for(int i = 0; i < lines.length  ; i++){
-      String[] spl = split(lines[i],"\n"); //splitanje novog reda"
-      writer.println(String.valueOf(spl[0]));;
-  }
-  writer.println(data);
-  writer.println("data2345");// Write the string into the file
-  writer.flush(); // Flush the output to the file*/
-  writer.close(); // Close the file
+  //settings
+  //settings = new Settings();
   
-
-
-  
+  //leadBoard
+  leaderBoard = new LeaderBoard();
+ 
 }
 
 
 //-------------------------------------------------DRAW-------------------------------------------------//
 void draw()
 {
+  
+  //odabir odgovarajuceg scrrena
+  
   if(isHome){
-    home.drawHome();
-   
+    home.drawHome();  
   }
-  else if(isPlayGame){
+  if(isPlayGame){
     playGame.drawPlayGame();
+  }
+  if(isGameOver){
+    gameOver.drawGameOver();
+  }
+  if(isLeadBoard){
+    leaderBoard.drawLeadBoard();
   }
 
 }
@@ -87,9 +97,14 @@ void mousePressed()
     playGame.mousePressed();  
   }
   
+  if (isGameOver){
+    gameOver.mousePressed();
+  }
+ 
+  
 }
 
-//fja za prepoznavanje je li stisnut gumb za povratak na Home
+//fja za prepoznavanje je li stisnut gumb za povratak na Home - globalna je jer ju vise klasa koristi
 boolean overButton(float x, float y, float diam) {
   float distX = x - mouseX;
   float distY = y - mouseY;
@@ -97,20 +112,41 @@ boolean overButton(float x, float y, float diam) {
   else { return false; }
 }
 
+//globalna jer koristi ju vise klasa
+void drawButtons(String[] labelsForButtons, int x, int y)
+  {
+    buttonWidth = y;
+    for(int i=0; i<labelsForButtons.length; i++)
+    {
+      pushMatrix();
+      strokeWeight(0);
+      boolean mouseOver = mouseX >= x && mouseX <= x + buttonWidth && mouseY >= y + i*spaceBetweenButtons && mouseY <= y + buttonHeight + i*spaceBetweenButtons;
+      fill(mouseOver ? #999999 : #CCCCCC);
+      rect(x, y + i*spaceBetweenButtons, buttonWidth, buttonHeight);
+      fill(0);
+      textAlign(CENTER, CENTER);
+      textSize(24);
+      text(labelsForButtons[i], x + buttonWidth / 2, y + buttonHeight / 2  + i*spaceBetweenButtons);
+      popMatrix();
+    }
+  }
 
-
-void gameOver()
+//datoteka ucitavanje
+void leaderBoardTxt()
 {
-  noLoop();
-  
-  //prilikom gameovera treba inicijalizirati novu igru
-  //TO DO dodati polje za ime i potvrdu spremanja hs
-  playGame = new PlayGame();
-  //gameMusic.stop(); //MUSIC
-  textSize(50);
-  text("GAME OVER!", width/2-100, height/2);
-  //TO DO dodati mogucnost odabira nove igre ili exita
-} 
+  String data = score + " " + day()+"/"+month()+"/"+year()+"-"+hour()+":"+minute()+":"+second(); // The string you want to store
+  lines = loadStrings("leaderboard.txt");   
+  PrintWriter writer = createWriter("leaderboard.txt"); // Create a new text file
+  for(int i = 0; i < lines.length  ; i++){
+      String[] spl = split(lines[i],"\n"); //splitanje novog reda"
+      writer.println(String.valueOf(spl[0]));;
+  }
+  writer.println(data);
+  writer.flush(); // Flush the output to the file
+  writer.close(); // Close the file*/    
+
+}
+
 
 
 

@@ -11,8 +11,7 @@ class PlayGame
   
   
   //ostale
-  int score;
-  //SoundFile gameMusic;
+  //int score;
   
   //---------------------------------------------------SLIKE---------------------------------------------------//
   PImage carImg,backgroundImage;
@@ -55,14 +54,15 @@ class PlayGame
         // treba li mi polje obstacle size obstacleSize[i] = int(random(30, 60));
     }
     
-    
+    score=0;
   
   }
 
   void drawPlayGame()
   {
     if(first){//gameMusic.play();
-  first=false;}
+      first=false;
+    }
     
     //pozadina
     background(backgroundImage);
@@ -140,7 +140,9 @@ class PlayGame
       
       //JE LI GAME OVER?
       if (dist(carCoordinateX, carCoordinateY,  obstacleCoordinateX[i], obstacleCoordinateY[i]) < 45/2 + 25) { //45 je obstacleSize
-        gameOver();
+        isGameOver = true;
+        isPlayGame = false;
+        
       }
     }
   }

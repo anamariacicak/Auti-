@@ -2,27 +2,25 @@ class Home
 {
 
   int x, y;
-  int buttonWidth, buttonHeight, spaceBetweenButtons;
+  //int buttonWidth, buttonHeight, spaceBetweenButtons;
   String[] labelsForButtons = new String[4];
 
   Home()
   {
     
-    x = (width - buttonWidth) /3;
     y = width/3;
+    x = (width - y + 150) /3;
     
-    buttonHeight=50;
+    /*buttonHeight=50;
     buttonWidth = y;
-    spaceBetweenButtons = 80;
+    spaceBetweenButtons = 80;*/
     
     labelsForButtons[0] = "Play";
     labelsForButtons[1] = "Settings";
     labelsForButtons[2] = "Leaderboard";
     labelsForButtons[3] = "Exit";
-    //["Play", "Settings", "Leaderboard", "Exit"];
     
-    textAlign(CENTER, CENTER);
-    textSize(24);
+    
     
     
   }
@@ -32,29 +30,15 @@ class Home
   
     pushMatrix();
     background(255);
-    drawButton(labelsForButtons, x, y);
+    drawButtons(labelsForButtons, x, y);
     popMatrix();
    
     //gameMusic.stop();
   
   }
   
-  void drawButton(String[] labelsForButtons, int x, int y)
-  {
-
-    for(int i=0; i<labelsForButtons.length; i++)
-    {
-      pushMatrix();
-      strokeWeight(0);
-      boolean mouseOver = mouseX >= x && mouseX <= x + buttonWidth && mouseY >= y + i*spaceBetweenButtons && mouseY <= y + buttonHeight + i*spaceBetweenButtons;
-      fill(mouseOver ? #999999 : #CCCCCC);
-      rect(x, y + i*spaceBetweenButtons, buttonWidth, buttonHeight);
-      fill(0);
-      text(labelsForButtons[i], x + buttonWidth / 2, y + buttonHeight / 2  + i*spaceBetweenButtons);
-      popMatrix();
-    }
-  }
   
+  //gumb je pritisnut na ekranu Home
   void mousePressed()
   {
     boolean mouseXCoordinate =  mouseX >= x && mouseX <= x + buttonWidth;
