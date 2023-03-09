@@ -1,6 +1,7 @@
 //dizajn
 //bugovi PlayGame
 //dorade
+//settings
 //igrac moze upisati svoje ime prije zapisi scorea
 //popraviti format leaderboarda
 //dodati vise prepreka

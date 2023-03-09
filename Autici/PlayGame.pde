@@ -3,65 +3,73 @@ class PlayGame
 
   //prepreke
   int numOfObstacles = 1;
-  int numOfObstaclesOnScreen = 10;
+  int numOfObstaclesOnScreen = 8;
   float[] obstacleCoordinateX = new float[numOfObstaclesOnScreen];
   float[] obstacleCoordinateY = new float[numOfObstaclesOnScreen];
   //float[] obstacleSize = new float[numOfObstaclesOnScreen];
-  float obstacleSpeed = 1;
+  float obstacleSpeed;
   
-  
-  //ostale
-  //int score;
   
   //---------------------------------------------------SLIKE---------------------------------------------------//
-  PImage carImg,backgroundImage;
+  PImage carImg, backgroundImage;
   PImage[] obstacleImages = new PImage[numOfObstacles];
   
   
   //-------------------------------------------------VARIJABLE-------------------------------------------------//
   //autic
   int carCoordinateX, carCoordinateY;
-  float carSpeed = 0.2;
-  boolean first = true; //za glazbu
+  float carSpeed;
+  boolean playMusic; //za glazbu
   
   PlayGame()
   {
-    //ucitavanje SLIKA
+    //pocetak igre
+    score=0;
+    
+    //glazba
+    playMusic = true;
+    
     //pozadina
     backgroundImage = loadImage("cesta2.jpg"); 
     backgroundImage.resize(width, height);
     
     //autic
+    carSpeed = 0.2; //TO DO brzina se mijenja u odnosu na vrijeme
     carImg = loadImage("car" + idOdabirAutica +".png"); 
     carImg.resize(75, 75);
-    carCoordinateX = width/2-40;
-    carCoordinateY = height-100;
+    carCoordinateX = width/2 - 40; //pocetna koordinata autica (carCoordinateX, carCoordinateY)
+    carCoordinateY = height - 100;
     
     //prepreke
-    for(int i=0; i<numOfObstacles; i++)
+    obstacleSpeed = 1; //TO DO brzina se mijenja u odnosu na vrijeme
+    
+    for(int i=0; i<numOfObstacles; i++) //ucitavanje svih slika prepreka
     { 
       obstacleImages[i] = loadImage("obstacle" + i + ".png"); 
-      obstacleImages[i].resize(50, 50);
+      obstacleImages[i].resize(45, 45);
     }
     
     //INICIJALIZACIJA KOORDINATA PREPREKA
-    //trebam li tu postaviti neke pocetne koordinate?
     for(int i=0; i<numOfObstaclesOnScreen; i++)
     { 
       //inicijalizacija slucajnih koordinata na pocetku
-        obstacleCoordinateX[i] = random(50, width-50);
-        obstacleCoordinateY[i] = random(-500, -100);//random(-500, -100); //po ekranu
+        obstacleCoordinateX[i] = random(135, width - 135);
+        obstacleCoordinateY[i] = random(-500, -100);//kao bi se prepreke pojavljivale na ekranu ispred autica, ako povecamo ovaj broj prepreke bi se mogle pojaviti prenisko
         // treba li mi polje obstacle size obstacleSize[i] = int(random(30, 60));
     }
     
-    score=0;
+    
   
   }
 
+
+  //-------------------------------------------------drawPlayGame-------------------------------------------------//
   void drawPlayGame()
   {
-    if(first){//gameMusic.play();
-      first=false;
+    
+    
+    if(playMusic){//gameMusic.play();
+      playMusic=false;
     }
     
     //pozadina
@@ -71,38 +79,29 @@ class PlayGame
     carCoordinateY -= carSpeed;
   
     //autic unutar ekrana --TO DO jesu li ove dimenzije dobre u odnosu na autic
-    carCoordinateX = constrain(carCoordinateX, 50, width-50);
-    carCoordinateY = constrain(carCoordinateY, 75, height-75);
+    carCoordinateX = constrain(carCoordinateX, 50, width - 140); //sirina ceste sa strane je 150?
+    carCoordinateY = constrain(carCoordinateY, 75, height -75);
     image(carImg, carCoordinateX, carCoordinateY);
     
-    
-    //crtanje autica --TO DO
-    /*if(firstPosition == true){
-      image(carImg, width/2, height-100); //TO DO ili -75? - ovisi o sizeu autica
-      firstPosition=false;
-    }
-    else{
-      image(carImg, width/2-40, height-100);
-    }*/
-    
-    
+      
     //PREPREKE - koordinate i kretanje te provjera je li se autic sudario
+    //prepreke
+    obstacleSpeed += 0.00000000000000000000000001; //TO DO brzina se mijenja u odnosu na vrijeme
     drawAndCheckObstacles();
     
     // Display the score
     fill(0);
     textSize(20);
-    text("Score: " + score, 20, 30);
+    text("Score: " + score, 70, 30);
     
-    // Increment the score
+    // TO DO mijenja se u odnosu na vrijeme
     score++;
     
-    //GUMB za povratak na home i exit - krug u kojem se nalazi strelica
+    //GUMB za povratak na home i exit 
     drawBackAndExitButtons();
-   
-    
   
   }
+  
   
   //-------------------------------------------------drawAndCheckObstacles-------------------------------------------------//
   void drawAndCheckObstacles()
@@ -112,17 +111,17 @@ class PlayGame
     { 
       //inicijalizacija slucajnih koordinata na pocetku
       obstacleCoordinateY[i] += obstacleSpeed;
-      if (obstacleCoordinateY[i] > height + 50) { //ovo uzrokuje praznocu na screenu, ne treba ih sve odjednom inicijalizirati 
-        obstacleCoordinateX[i] = random(0, width); // ostaviti uvijek mjesta za prolaz autica, staviti ogranicenja na generiranje prepreka, ne smije biti prazne pozadine odjednom jer se sve izgeneriraju
-        obstacleCoordinateY[i] = random(-550, -100);//random(-500, -100); //po ekranu
-        // treba li mi polje obstacle size obstacleSize[i] = int(random(30, 60));
+      if (obstacleCoordinateY[i] > height + 50){ 
+        obstacleCoordinateX[i] = random(135, width - 135); // ostaviti uvijek mjesta za prolaz autica, staviti ogranicenja na generiranje prepreka, ne smije biti prazne pozadine odjednom jer se sve izgeneriraju
+        obstacleCoordinateY[i] = random(-500, -100);
+        //TO DO obstacleSize[i] = int(random(30, 60));
       }
     }
     
-    //crtanje prepreka
-    for(int i=0; i<numOfObstaclesOnScreen; i++)
+    //crtanje prepreka - odaberi dva random broja i njih nacrtaj
+    for(int i=0; i<numOfObstaclesOnScreen; i++) //
     {
-      image(obstacleImages[int(random(0, numOfObstacles)) ], obstacleCoordinateX[i], obstacleCoordinateY[i], 45, 45);
+      image(obstacleImages[int(random(0, numOfObstacles)) ], obstacleCoordinateX[i], obstacleCoordinateY[i], 45, 45); //ovo uzrokuje praznocu na screenu, ne treba ih sve odjednom inicijalizirati 
       
       //JE LI GAME OVER?
       if (dist(carCoordinateX, carCoordinateY,  obstacleCoordinateX[i], obstacleCoordinateY[i]) < 45/2 + 25) { //45 je obstacleSize
@@ -133,9 +132,6 @@ class PlayGame
     }
   }
     
- 
-  
-
 
   //-------------------------------------------------keyPressed-------------------------------------------------//
   //kretanje autica gore, dolje, lijevo i desno na pritisak tipki
@@ -150,16 +146,15 @@ class PlayGame
   
   void mousePressed()
   {
-    //circle(40, height-40, 60);
-    if(overButton(40, height-40, 60) == true) //gumb za back
+    if(overCircleButton(40, height-40, 60) == true) //gumb za back
     { 
       //MUSIC gameMusic.stop();
       isHome = true;
       isPlayGame = false;
       playGame = new PlayGame();
     }
-    else if(overButton(width - 40, height-40, 60) == true) { exit(); }
-  
+    else if(overCircleButton(width - 40, height-40, 60) == true) { exit(); }
   }
+
 
 }

@@ -33,7 +33,7 @@ class Settings
     //BACK
     pushMatrix();
     stroke(0);
-    fill(overButton(x-15, height-650+120, 40) ? 120 :255);
+    fill(overCircleButton(x-15, height-650+120, 40) ? 120 :255);
     strokeWeight(1);
     circle(x-15, y, 40); //krug
     popMatrix();
@@ -47,7 +47,7 @@ class Settings
     //BACK
     pushMatrix();
     stroke(0);
-    fill(overButton(width-(height-650+120), height-650+120, 40) ? 120 :255);
+    fill(overCircleButton(width-(height-650+120), height-650+120, 40) ? 120 :255);
     strokeWeight(1);
     circle(width-y, y, 40); //krug
     popMatrix();
@@ -76,29 +76,29 @@ class Settings
 
   void mousePressed()
   {
-    if(overButton(40, height-40, 60) == true) //gumb za back
+    if(overCircleButton(40, height-40, 60) == true) //gumb za back
     { 
       //MUSIC BACKGORUNDMusic.stop();
       isHome = true;
       isSettings = false;
     }
-    else if(overButton(width - 40, height-40, 60) == true) { exit(); } 
+    else if(overCircleButton(width - 40, height-40, 60) == true) { exit(); } 
     
-    if(overButton(x-15, height-650+120, 40) == true)
+    if(overCircleButton(x-15, height-650+120, 40) == true)
     {
       idOdabirAutica--;
       if(idOdabirAutica<0) idOdabirAutica = 0;
       //if(idOdabirAutica > brojAutica-1) idOdabirAutica = brojAutica-1;
       playGame = new PlayGame();
     }
-    else if(overButton(width-(height-650+120), height-650+120, 40) == true)
+    else if(overCircleButton(width-(height-650+120), height-650+120, 40) == true)
     {
       idOdabirAutica++;
       //if(idOdabirAutica<0) idOdabirAutica = 0;
       if(idOdabirAutica > brojAutica-1) idOdabirAutica = brojAutica-1; 
       playGame = new PlayGame();
     }
-    //circle(width-15, y, 40)
+
   }
 
 
