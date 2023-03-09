@@ -3,11 +3,11 @@ class GameOver
 
   int x, y;
   String[] labelsForButtons = new String[3];
-  boolean leaderBoard;
+  boolean writeLeaderBoard;
 
   GameOver()
   {
-    leaderBoard = true; //zbog fje draw
+    writeLeaderBoard = true; //zbog fje draw
     
     y = width/3;
     x = (width - y + 150) /3;
@@ -44,9 +44,9 @@ class GameOver
     
     //TO DO dodati polje za ime i potvrdu spremanja hs
     //zapis leaderboard
-    if(leaderBoard==true){
+    if(writeLeaderBoard==true){
       leaderBoardTxt(); 
-      leaderBoard=false;
+      writeLeaderBoard=false;
     }//spremanje zapisa
   
     //prilikom gameovera treba inicijalizirati novu igru    

@@ -1,6 +1,4 @@
 import processing.sound.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 
 //SoundFile gameMusic;
 
@@ -10,6 +8,10 @@ int buttonWidth, buttonHeight, spaceBetweenButtons;
 
 int score;
 
+int idOdabirAutica=0,  brojAutica = 2;
+
+int topY=height-650;
+
 //---------------------------------------------------KLASE---------------------------------------------------//
 Home home;
 boolean isHome = true;
@@ -17,15 +19,14 @@ PlayGame playGame;
 boolean isPlayGame = false;
 GameOver gameOver;
 boolean isGameOver = false;
-//Settings settings;
+Settings settings;
 boolean isSettings = false;
 LeaderBoard leaderBoard;
-boolean isLeadBoard = false;
+boolean isLeaderBoard = false;
 
 //-------------------------------------------------SETUP-------------------------------------------------//
 void setup() //INICIJALZICAIJA
 {
-
   size(550,750);
   
   //glazba
@@ -44,7 +45,7 @@ void setup() //INICIJALZICAIJA
   gameOver = new GameOver();
   
   //settings
-  //settings = new Settings();
+  settings = new Settings();
   
   //leadBoard
   leaderBoard = new LeaderBoard();
@@ -56,19 +57,22 @@ void setup() //INICIJALZICAIJA
 void draw()
 {
   
-  //odabir odgovarajuceg scrrena
+  //odabir odgovarajuceg screena
   
   if(isHome){
     home.drawHome();  
   }
-  if(isPlayGame){
+  else if(isPlayGame){
     playGame.drawPlayGame();
   }
-  if(isGameOver){
+  else if(isGameOver){
     gameOver.drawGameOver();
   }
-  if(isLeadBoard){
+  else if(isLeaderBoard){
     leaderBoard.drawLeadBoard();
+  }
+  else if(isSettings){
+    settings.drawSettings();
   }
 
 }
@@ -100,9 +104,54 @@ void mousePressed()
   if (isGameOver){
     gameOver.mousePressed();
   }
+  
+  if (isLeaderBoard){
+    leaderBoard.mousePressed();
+  }
  
+ if(isSettings){
+    settings.mousePressed();
+  }
   
 }
+
+
+//-------------------------------------------------crtanje back gumba i exit gumba-------------------------------------------------//
+//https://forum.processing.org/one/topic/drawing-an-arrow.html
+void drawArrow(int cx, int cy, int len, float angle){
+    pushMatrix();
+    strokeWeight(10);
+    stroke(0);
+    translate(cx, cy);
+    rotate(radians(angle));
+    line(0,0,len, 0);
+    line(len, 0, len - 8, -8);
+    line(len, 0, len - 8, 8);
+    popMatrix();
+}
+
+void drawBackAndExitButtons()
+{
+  
+  //BACK
+    pushMatrix();
+    stroke(0);
+    fill(overButton(40, height-40, 60) ? 120 :255);
+    strokeWeight(1);
+    circle(40, height-40, 60); //krug
+    popMatrix();
+    drawArrow(55,height-40,30,180); //strelica
+    
+    //EXIT
+    pushMatrix();
+    stroke(0);
+    fill(overButton(width - 40, height-40, 60) ? 120 :255);
+    strokeWeight(1);
+    circle(width - 40, height-40, 60); //krug  
+    popMatrix(); 
+  
+}
+
 
 //fja za prepoznavanje je li stisnut gumb za povratak na Home - globalna je jer ju vise klasa koristi
 boolean overButton(float x, float y, float diam) {
@@ -131,6 +180,21 @@ void drawButtons(String[] labelsForButtons, int x, int y)
     }
   }
 
+void drawButtonWithoutCover(String labelForButton, int x, int y, int buttonWidth)
+{
+    
+    pushMatrix();
+    strokeWeight(0);
+    fill(#CCCCCC);
+    rect(x, y + 0*spaceBetweenButtons, buttonWidth, buttonHeight);
+    fill(0);
+    textAlign(CENTER, CENTER);
+    textSize(24);
+    text(labelForButton, x + buttonWidth / 2, y + buttonHeight / 2  + 0*spaceBetweenButtons);
+    popMatrix();
+    
+}
+
 //datoteka ucitavanje
 void leaderBoardTxt()
 {
@@ -153,12 +217,11 @@ void leaderBoardTxt()
 
 
 //TO DO
-//dodati gumb za povratak na svaki screen
-//HOME - play, settings, exit
-//dodati ostale screenove: HOME, NEW GAME, SETTINGS - (sound,..) , EXIT -> klase
-//tablica igara
-//igrac moze upisati svoje ime prije pocetka igre
+//dizajn
+//bugovi PlayGame
+//dorade
+//igrac moze upisati svoje ime prije zapisi scorea
+//popraviti format leaderboarda
 //dodati vise prepreka
 //pogledati to do u kodu
-//igrac moze birati model autica
 //levele mozemo mjeriti na osnovu scorea

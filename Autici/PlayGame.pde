@@ -32,7 +32,7 @@ class PlayGame
     backgroundImage.resize(width, height);
     
     //autic
-    carImg = loadImage("car.png"); 
+    carImg = loadImage("car" + idOdabirAutica +".png"); 
     carImg.resize(75, 75);
     carCoordinateX = width/2-40;
     carCoordinateY = height-100;
@@ -98,22 +98,8 @@ class PlayGame
     score++;
     
     //GUMB za povratak na home i exit - krug u kojem se nalazi strelica
-    //BACK
-    pushMatrix();
-    stroke(0);
-    fill(overButton(40, height-40, 60) ? 120 :255);
-    strokeWeight(1);
-    circle(40, height-40, 60); //krug
-    popMatrix();
-    drawArrow(55,height-40,30,180); //strelica
-    
-    //EXIT
-    pushMatrix();
-    stroke(0);
-    fill(overButton(width - 40, height-40, 60) ? 120 :255);
-    strokeWeight(1);
-    circle(width - 40, height-40, 60); //krug  
-    popMatrix();
+    drawBackAndExitButtons();
+   
     
   
   }
@@ -147,20 +133,7 @@ class PlayGame
     }
   }
     
-   //-------------------------------------------------crtanje back gumba i exit gumba-------------------------------------------------//
-  
-  //https://forum.processing.org/one/topic/drawing-an-arrow.html
-  void drawArrow(int cx, int cy, int len, float angle){
-    pushMatrix();
-    strokeWeight(10);
-    stroke(0);
-    translate(cx, cy);
-    rotate(radians(angle));
-    line(0,0,len, 0);
-    line(len, 0, len - 8, -8);
-    line(len, 0, len - 8, 8);
-    popMatrix();
-  }
+ 
   
 
 
