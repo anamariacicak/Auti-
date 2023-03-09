@@ -11,8 +11,9 @@ class Settings
 
   void drawSettings()
   {
-    background(255);
-    
+    //background(255);
+    backgroundImage.resize(550,750);
+    background(backgroundImage);
     
     //odabir autica
     drawButtonWithoutCover("Autic", x, height-650, y);
@@ -22,7 +23,8 @@ class Settings
     
     drawCarImageBetweenArrows(height-650+120);
     
-    drawBackAndExitButtons();
+    drawBackButton();
+    drawExitButton();
   
   }
   
@@ -82,7 +84,7 @@ class Settings
       isHome = true;
       isSettings = false;
     }
-    else if(overCircleButton(width - 40, height-40, 60) == true) { exit(); } 
+    else if(overCircleButton(width - 40, 40, 60) == true) { exit(); } 
     
     if(overCircleButton(x-15, height-650+120, 40) == true)
     {

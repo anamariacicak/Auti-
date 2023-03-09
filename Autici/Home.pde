@@ -27,11 +27,17 @@ class Home
   
   void drawHome()
   {
-  
-    pushMatrix();
-    background(255);
+
+    backgroundImage.resize(550,750);
+    background(backgroundImage);
+    
+    fill(#0000FF);
+    textSize(50);
+    textAlign(CENTER);
+    text("Cars", width/2-10, 150);
+    
     drawButtons(labelsForButtons, x, y);
-    popMatrix();
+    
    
     //gameMusic.stop();
   

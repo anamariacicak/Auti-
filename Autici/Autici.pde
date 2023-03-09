@@ -1,14 +1,20 @@
 import processing.sound.*;
+import java.util.Arrays;
+import java.io.*;
+import java.lang.*;
+import java.util.*;
 
 //SoundFile gameMusic;
 
-
+PImage backgroundImage;
 
 int  buttonWidth, buttonHeight, spaceBetweenButtons;
 
 int score; //mora biti globalna kako bi ga mogli ispisati na leaderboard
 
 int idOdabirAutica = 0,  brojAutica = 2; //globalna jer koristimo u Settingsu i u PlayGame pri ucitavanju - hardkodirano je
+
+String playerName="player";
 
 //---------------------------------------------------KLASE---------------------------------------------------//
 Home home;
@@ -26,6 +32,10 @@ boolean isLeaderBoard = false;
 void setup()
 {
   size(550,750);
+  
+  //background
+  backgroundImage = loadImage("cesta2.jpg");
+  //backgroundImage = loadImage("pozadina2.png");
   
   //glazba
   // gameMusic=new SoundFile(this, "game_music.mp3");
@@ -87,6 +97,9 @@ void keyPressed()
 {
   if(isPlayGame){
     playGame.keyPressed();
+  }
+  else if(isGameOver){
+    gameOver.keyPressed();
   }
   
 }
@@ -158,7 +171,7 @@ void drawButtonWithoutCover(String labelForButton, int x, int y, int buttonWidth
 
 
 //-------------------------------------------------crtanje back gumba i exit gumba-------------------------------------------------//
-void drawBackAndExitButtons()
+void drawBackButton()
 {
   
   //BACK
@@ -169,17 +182,19 @@ void drawBackAndExitButtons()
   circle(40, height-40, 60); //krug
   popMatrix();
   drawArrow(55,height-40,30,180); //strelica unutar kruga
-  
+}
+void drawExitButton()
+{
   //EXIT
   pushMatrix();
   stroke(0);
-  fill(overCircleButton(width - 40, height-40, 60) ? 120 :255);
-  strokeWeight(1);
-  circle(width - 40, height-40, 60); //krug
+  //fill(overCircleButton(width - 40, 40, 60) ? 120 :255);
+  strokeWeight(0);
+  //circle(width - 40, 40, 60); //krug height-40
   strokeWeight(5);
   stroke(#EE1111);
-  line(width - 60, height-60, width-20, height-20); //X unutar kruga
-  line(width - 20, height-60, width-60, height-20);
+  line(width - 60, 20, width-20, 60); //X unutar kruga //height-60 height-20 y koordinate
+  line(width - 20, 20, width-60, 60);
   popMatrix(); 
   
 }
@@ -218,7 +233,7 @@ boolean overCircleButton(float x, float y, float diam)
 void leaderBoardTxt()
 {
   String[] lines;
-  String data = score + " " + day()+"/"+month()+"/"+year()+"-"+hour()+":"+minute()+":"+second(); // The string you want to store
+  String data = score + " "  + playerName + " " + day()+"/"+month()+"/"+year()+"-"+hour()+":"+minute()+":"+second(); // The string you want to store
   lines = loadStrings("leaderboard.txt");   
   PrintWriter writer = createWriter("leaderboard.txt"); // Create a new text file
   for(int i = 0; i < lines.length  ; i++){
@@ -236,10 +251,12 @@ void leaderBoardTxt()
 //TO DO
 //dizajn
 //dorade
-//igrac moze upisati svoje ime prije zapisi scorea
-//popraviti format leaderboarda
-//pogledati to do u kodu
+//settings
 //levele mozemo mjeriti na osnovu scorea
 //testirati glazbu
+//pogledati to do u kodu
 //bugovi PlayGame - obstacleSpeed(carSpeed) i score - pogledati TO DO u playGame
 //dodati vise prepreka
+//prepreke promijenjive velicine
+//razlicita pozadina od pozadine u igrici
+//igrac moze upisati svoje ime prije zapisi scorea - potvrda toga

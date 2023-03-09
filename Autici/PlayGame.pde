@@ -11,7 +11,7 @@ class PlayGame
   
   
   //---------------------------------------------------SLIKE---------------------------------------------------//
-  PImage carImg, backgroundImage;
+  PImage carImg, roadImage;
   PImage[] obstacleImages = new PImage[numOfObstacles];
   
   
@@ -24,14 +24,15 @@ class PlayGame
   PlayGame()
   {
     //pocetak igre
+    playerName = "player";
     score=0;
     
     //glazba
     playMusic = true;
     
     //pozadina
-    backgroundImage = loadImage("cesta2.jpg"); 
-    backgroundImage.resize(width, height);
+    roadImage = loadImage("cesta2.jpg"); 
+    roadImage.resize(width, height);
     
     //autic
     carSpeed = 0.2; //TO DO brzina se mijenja u odnosu na vrijeme
@@ -73,7 +74,7 @@ class PlayGame
     }
     
     //pozadina
-    background(backgroundImage);
+    background(roadImage);
   
     //pomak autica prema gore je automatski
     carCoordinateY -= carSpeed;
@@ -98,7 +99,8 @@ class PlayGame
     score++;
     
     //GUMB za povratak na home i exit 
-    drawBackAndExitButtons();
+    drawBackButton();
+    drawExitButton();
   
   }
   
@@ -125,6 +127,7 @@ class PlayGame
       
       //JE LI GAME OVER?
       if (dist(carCoordinateX, carCoordinateY,  obstacleCoordinateX[i], obstacleCoordinateY[i]) < 45/2 + 25) { //45 je obstacleSize
+        background(255);
         isGameOver = true;
         isPlayGame = false;
         
@@ -146,14 +149,14 @@ class PlayGame
   
   void mousePressed()
   {
-    if(overCircleButton(40, height-40, 60) == true) //gumb za back
+    if(overCircleButton(40, height - 40, 60) == true) //gumb za back
     { 
       //MUSIC gameMusic.stop();
       isHome = true;
       isPlayGame = false;
       playGame = new PlayGame();
     }
-    else if(overCircleButton(width - 40, height-40, 60) == true) { exit(); }
+    else if(overCircleButton(width - 40, 40, 60) == true) { exit(); }
   }
 
 

@@ -1,74 +1,102 @@
 class GameOver
 {
-
+  
   int x, y;
-  String[] labelsForButtons = new String[3];
-  boolean writeLeaderBoard;
-
+  String[] labelsForButtons = new String[2]; //2 buttona 
+  
   GameOver()
   {
-    writeLeaderBoard = true; //zbog fje draw
     
     y = width/3;
     x = (width - y + 150) /3;
     
-    
     labelsForButtons[0] = "Play Again";
     labelsForButtons[1] = "Home";
-    labelsForButtons[2] = "Exit";
-    
+    //labelsForButtons[2] = "Exit";
+     
   }
 
 
   void drawGameOver() //screen koji se prikazuje kada je igra gotova
   {
     
-    gameOver(); //sto sve treba odraditi u pozadini - > nova igra, zapis u leaderboard, prekid glazbe
-    
-   
-    //dva gumba - > play again, home, i exit   //TO DO da unese ime za leaderboard i modifikacija leadboarda, play again, dolje standarno dva kruga
-    drawButtons(labelsForButtons, x, y);  
-  
-  }
-  
-  
-  void gameOver()
-  {
-    
-    //noLoop();
+    //sto sve treba odraditi u pozadini - > nova igra, zapis u leaderboard, prekid glazbe,...
     background(255);
+    backgroundImage.resize(550,750);
+    background(backgroundImage);
     textSize(50);
     textAlign(CENTER, TOP);
-    fill(0);
+    fill(#0000FF);
     text("GAME OVER!", width/2, height - 650);
-    
-    //TO DO dodati polje za ime i potvrdu spremanja hs
-    //zapis leaderboard
-    if(writeLeaderBoard==true){
-      leaderBoardTxt(); 
-      writeLeaderBoard=false;
-    }//spremanje zapisa
-  
-    //prilikom gameovera treba inicijalizirati novu igru    
-    playGame = new PlayGame();
 
-    
     //gameOver.drawGameOver();
     //gameMusic.stop(); //MUSIC
     
+    //textbox
+    drawButtonWithoutCover(playerName, x,  y,  buttonWidth);
+    /*fill(#0000FF);
+    rect(x, y, buttonWidth, buttonHeight); // draw text box
+    fill(0);
+    textSize(25);
+    text(playerName, x+75, y+7); // display current text input*/
+    
+    //dva gumba - > play again, home, i exit   //TO DO da unese ime za leaderboard i modifikacija leadboarda, play again, dolje standarno dva kruga
+    drawButtons(labelsForButtons, x, y+spaceBetweenButtons); 
+    drawExitButton();
 
   }
   
+  
+  void keyPressed()
+  {
+    if (key >= 'A' && key <= 'Z' || key >= 'a' && key <= 'z' || key == ' ' || key == BACKSPACE) { // check for valid input keys
+      if (textWidth(playerName) < buttonWidth - 70 && key != BACKSPACE) { // check if text fits in box and key is not backspace
+        playerName += key; // add key to text input
+      }
+      else if (key == BACKSPACE && playerName.length() > 0) { // check if backspace key pressed and text input is not empty
+      playerName = playerName.substring(0, playerName.length()-1); // remove last character from text input
+      }
+    }
+  
+  
+  }
   
   //gumb je pritisnut na ekranu GameOver
   void mousePressed()
   {
+    
     boolean mouseXCoordinate =  mouseX >= x && mouseX <= x + buttonWidth;
-    if(mouseXCoordinate && mouseY >= y + 0*spaceBetweenButtons && mouseY <= y + buttonHeight + 0*spaceBetweenButtons) { 
-      isPlayGame = true; isGameOver=false; gameOver = new GameOver(); //zbog zapisa u leadboard.txt i inicijalizacije ponovne var leadboard u true
-    } //play again
-    else if(mouseXCoordinate && mouseY >= y + 1*spaceBetweenButtons && mouseY <= y + buttonHeight + 1*spaceBetweenButtons) { isHome = true; isGameOver=false; gameOver = new GameOver(); } //home
-    else if(mouseXCoordinate && mouseY >= y + 2*spaceBetweenButtons && mouseY <= y + buttonHeight + 3*spaceBetweenButtons) { exit(); } //exit
+    if(mouseXCoordinate && mouseY >= y + 1*spaceBetweenButtons && mouseY <= y + buttonHeight + 1*spaceBetweenButtons) //play again
+    { 
+      //TO dodati potvrdu spremanja hs
+      //zapis leaderboar
+      leaderBoardTxt(); 
+      isPlayGame = true; //prilikom gameovera treba inicijalizirati novu igru    
+      playGame = new PlayGame();
+      isGameOver=false; 
+      //gameOver = new GameOver(); 
+    } 
+    
+    else if(mouseXCoordinate && mouseY >= y + 2*spaceBetweenButtons && mouseY <= y + buttonHeight + 2*spaceBetweenButtons) //home
+    { 
+      //TO dodati potvrdu spremanja hs
+      //zapis leaderboard
+      leaderBoardTxt(); 
+       
+      isHome = true; //prilikom gameovera treba inicijalizirati novu igru    
+      playGame = new PlayGame(); 
+      isGameOver=false; 
+      //gameOver = new GameOver(); 
+      
+    } 
+    
+    //else if(mouseXCoordinate && mouseY >= y + 2*spaceBetweenButtons && mouseY <= y + buttonHeight + 3*spaceBetweenButtons) { leaderBoardTxt(); exit(); } //exit
+    else if(overCircleButton(width - 40, 40, 60) == true) { //exit //TO DO nije potreban writeOnLeaderBoard- jedino kasnije ako cemo omoguciti ok
+      //TO dodati potvrdu spremanja hs
+      //zapis leaderboard
+      leaderBoardTxt(); 
+      exit(); 
+    } 
   
   }
 
