@@ -4,21 +4,29 @@ class GameOver
   int x, y;
   String[] labelsForButtons = new String[2]; //2 buttona 
   
+  boolean flagMusic;
+  
   GameOver()
   {
     
     y = width/3;
     x = (width - y + 150) /3;
     
-    labelsForButtons[0] = "Play Again";
-    labelsForButtons[1] = "Home";
-    //labelsForButtons[2] = "Exit";
+    flagMusic = true;
+    
+    labelsForButtons[0] = "Nova igra";
+    labelsForButtons[1] = "Izbornik";
      
   }
 
 
   void drawGameOver() //screen koji se prikazuje kada je igra gotova
   {
+    
+    if(flagMusic == true){
+      flagMusic = false;
+      backgroundMusic.loop();
+    }
     
     //sto sve treba odraditi u pozadini - > nova igra, zapis u leaderboard, prekid glazbe,...
     background(255);
@@ -33,12 +41,7 @@ class GameOver
     //gameMusic.stop(); //MUSIC
     
     //textbox
-    drawButtonWithoutCover(playerName, x,  y,  buttonWidth);
-    /*fill(#0000FF);
-    rect(x, y, buttonWidth, buttonHeight); // draw text box
-    fill(0);
-    textSize(25);
-    text(playerName, x+75, y+7); // display current text input*/
+    drawButton(playerName, x,  y,  buttonWidth, false);
     
     //dva gumba - > play again, home, i exit   //TO DO da unese ime za leaderboard i modifikacija leadboarda, play again, dolje standarno dva kruga
     drawButtons(labelsForButtons, x, y+spaceBetweenButtons); 

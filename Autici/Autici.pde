@@ -4,17 +4,21 @@ import java.io.*;
 import java.lang.*;
 import java.util.*;
 
-//SoundFile gameMusic;
+SoundFile backgroundMusic, playGameMusic;
 
 PImage backgroundImage;
 
 int  buttonWidth, buttonHeight, spaceBetweenButtons;
 
-int score; //mora biti globalna kako bi ga mogli ispisati na leaderboard
+int score; 
 
-int idOdabirAutica = 0,  brojAutica = 2; //globalna jer koristimo u Settingsu i u PlayGame pri ucitavanju - hardkodirano je
+int idOdabirAutica = 0,  brojAutica = 2; //hardkodirano 
+
+boolean musicOn = true;
 
 String playerName="player";
+
+PFont font;
 
 //---------------------------------------------------KLASE---------------------------------------------------//
 Home home;
@@ -33,12 +37,17 @@ void setup()
 {
   size(550,750);
   
-  //background
-  backgroundImage = loadImage("cesta2.jpg");
-  //backgroundImage = loadImage("pozadina2.png");
+  //font
+  font = createFont("LG A100.ttf", 128);
+  textFont(font);
   
   //glazba
-  // gameMusic=new SoundFile(this, "game_music.mp3");
+  //play, loop, pause
+  backgroundMusic = new SoundFile(this, "background_music.mp3");
+  playGameMusic = new SoundFile(this, "playGame_music.mp3");
+  
+  //background
+  backgroundImage = loadImage("cesta2.jpg");
   
   //buttonsi
   buttonWidth = width/3;
@@ -49,10 +58,10 @@ void setup()
   home = new Home(); 
   
   //play
-  playGame = new PlayGame();
+  //playGame = new PlayGame();
   
   //gameOver
-  gameOver = new GameOver();
+  //gameOver = new GameOver();
   
   //settings
   settings = new Settings();
@@ -153,12 +162,16 @@ void drawButtons(String[] labelsForButtons, int x, int y)
 }
 
 
-void drawButtonWithoutCover(String labelForButton, int x, int y, int buttonWidth)
+void drawButton(String labelForButton, float x, float y, int buttonWidth, boolean cover)
 {
     
     pushMatrix();
     strokeWeight(0);
-    fill(#CCCCCC);
+    if(cover == true) {
+      boolean mouseOver = mouseX >= x && mouseX <= x + buttonWidth && mouseY >= y  && mouseY <= y + buttonHeight;
+      fill(mouseOver ? #0000FF : #00BFFF);
+    }
+    else fill(#00BFFF);
     rect(x, y + 0*spaceBetweenButtons, buttonWidth, buttonHeight);
     fill(0);
     textAlign(CENTER, CENTER);
@@ -183,6 +196,7 @@ void drawBackButton()
   popMatrix();
   drawArrow(55,height-40,30,180); //strelica unutar kruga
 }
+
 void drawExitButton()
 {
   //EXIT
@@ -195,13 +209,12 @@ void drawExitButton()
   stroke(#EE1111);
   line(width - 60, 20, width-20, 60); //X unutar kruga //height-60 height-20 y koordinate
   line(width - 20, 20, width-60, 60);
-  popMatrix(); 
-  
+  popMatrix();   
 }
 
 //STRELICA
 //https://forum.processing.org/one/topic/drawing-an-arrow.html
-void drawArrow(int cx, int cy, int len, float angle){
+void drawArrow(float cx, float cy, float len, float angle){
     pushMatrix();
     strokeWeight(10);
     stroke(0);
@@ -218,7 +231,6 @@ void drawArrow(int cx, int cy, int len, float angle){
 //-------------------------------------------------overCircleButton-------------------------------------------------//
 //fja za prepoznavanje nalazi li se mis iznad gumba koji je oblika tipa krug
 //sluzi kao pomoc pri prepoznavanju je li pritisnut gumb za povratak (Back (u nasem slucaju povratak na Home) i Exit buttonsi)
-//globalna jer ju vise klasa koristi - button Home i Exit se nalaze na vise razlicitih screenova
 boolean overCircleButton(float x, float y, float diam) 
 {
   if (sqrt(sq(x - mouseX) + sq(y - mouseY)) < diam/2 ) { 
@@ -229,7 +241,8 @@ boolean overCircleButton(float x, float y, float diam)
 
 
 
-//datoteka ucitavanje
+//-------------------------------------------------leaderBoardTxt-------------------------------------------------//
+//ucitavanje datoteke leaderboard.txt potrebne za ispis ljestvice poretka
 void leaderBoardTxt()
 {
   String[] lines;
@@ -247,12 +260,7 @@ void leaderBoardTxt()
 }
 
 
-
 //TO DO
-//dizajn
-//dorade
-//settings
-//levele mozemo mjeriti na osnovu scorea
 //testirati glazbu
 //pogledati to do u kodu
 //bugovi PlayGame - obstacleSpeed(carSpeed) i score - pogledati TO DO u playGame
@@ -260,3 +268,5 @@ void leaderBoardTxt()
 //prepreke promijenjive velicine
 //razlicita pozadina od pozadine u igrici
 //igrac moze upisati svoje ime prije zapisi scorea - potvrda toga
+//levele mozemo mjeriti na osnovu scorea
+//dodati jos prepreka, razlicita velicina prepreka

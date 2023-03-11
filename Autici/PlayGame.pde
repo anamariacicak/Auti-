@@ -19,7 +19,7 @@ class PlayGame
   //autic
   int carCoordinateX, carCoordinateY;
   float carSpeed;
-  boolean playMusic; //za glazbu
+  boolean flagMusic; //za glazbu
   
   PlayGame()
   {
@@ -28,7 +28,7 @@ class PlayGame
     score=0;
     
     //glazba
-    playMusic = true;
+    flagMusic = true;
     
     //pozadina
     roadImage = loadImage("cesta2.jpg"); 
@@ -69,8 +69,9 @@ class PlayGame
   {
     
     
-    if(playMusic){//gameMusic.play();
-      playMusic=false;
+    if(flagMusic == true){
+      flagMusic = false;
+      playGameMusic.loop();
     }
     
     //pozadina
@@ -128,8 +129,11 @@ class PlayGame
       //JE LI GAME OVER?
       if (dist(carCoordinateX, carCoordinateY,  obstacleCoordinateX[i], obstacleCoordinateY[i]) < 45/2 + 25) { //45 je obstacleSize
         background(255);
-        isGameOver = true;
         isPlayGame = false;
+        playGameMusic.stop();
+        isGameOver = true;
+        gameOver = new GameOver();
+        
         
       }
     }

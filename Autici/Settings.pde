@@ -1,27 +1,37 @@
 class Settings
 {
-  int x, y; //svugdje isti? - globalan
+  int x, y; 
+  
+  boolean flagMusic;
 
   Settings()
   {
-   y = width/3;
+   y = height - 650 + 120;
    x = (width - y + 150) /3;
-
   }
 
   void drawSettings()
   {
-    //background(255);
+    
     backgroundImage.resize(550,750);
     background(backgroundImage);
     
-    //odabir autica
-    drawButtonWithoutCover("Autic", x, height-650, y);
-    //topY = topY + spaceBetweenButtons;
-    drawLeftArrow(height-650+120);
-    drawRightArrow(height-650+120);
+    flagMusic = true;
     
-    drawCarImageBetweenArrows(height-650+120);
+    //odabir autica
+    drawButton("Autic", x + 10, height - 650, width/3, false);
+    drawLeftArrow(x, y);
+    drawRightArrow(width - y, y);
+    drawCarImageBetweenArrows(x + 10, y);
+    
+    //music on/off
+    drawButton("Zvuk", x + 10, y + 1.5 * spaceBetweenButtons, width/3, false);
+    if(musicOn == true){
+      drawButton("On", x + 75, y + 2.5 * spaceBetweenButtons, width/8, true);
+    }
+    else if(musicOn == false){
+      drawButton("Off", x + 75, y + 2.5 * spaceBetweenButtons, width/8, true);
+    }
     
     drawBackButton();
     drawExitButton();
@@ -29,35 +39,35 @@ class Settings
   }
   
   
-  void drawLeftArrow(int y)
+  void drawLeftArrow(float x, float y)
   {
   
     //BACK
     pushMatrix();
     stroke(0);
-    fill(overCircleButton(x-15, height-650+120, 40) ? 120 :255);
+    fill(overCircleButton(x, y, 40) ? 122 : 255);
     strokeWeight(1);
-    circle(x-15, y, 40); //krug
+    circle(x, y, 40); //krug
     popMatrix();
-    drawArrow(x-5,y,20,180); //strelica
+    drawArrow(x + 10, y, 20, 180); //strelica
   
   }
   
-  void drawRightArrow(int y)
+  void drawRightArrow(float x, float y)
   {
   
     //BACK
     pushMatrix();
     stroke(0);
-    fill(overCircleButton(width-(height-650+120), height-650+120, 40) ? 120 :255);
+    fill(overCircleButton(x + 20, y, 40) ? 120 : 255);
     strokeWeight(1);
-    circle(width-y, y, 40); //krug
+    circle(x + 25, y, 40); //krug
     popMatrix();
-    drawArrow(width- y -10,y,20,0); //strelica
+    drawArrow(x + 15, y, 20, 0); //strelica
   
   }
   
-  void drawCarImageBetweenArrows(int y)
+  void drawCarImageBetweenArrows(int x, int y)
   {
     pushMatrix();
     textSize(10);
@@ -67,18 +77,15 @@ class Settings
    
     PImage carImg = loadImage("car" + idOdabirAutica +".png"); 
     carImg.resize(75,75);
-    image(carImg, x -15 + 55, y -20);
-    //text("autic!", width/2, height - 650);
+    image(carImg, x + 60, y -20);
     popMatrix();
   
   }
   
   
-  
-
   void mousePressed()
   {
-    if(overCircleButton(40, height-40, 60) == true) //gumb za back
+    if(overCircleButton(40, height - 40, 60) == true) //gumb za back
     { 
       //MUSIC BACKGORUNDMusic.stop();
       isHome = true;
@@ -86,19 +93,24 @@ class Settings
     }
     else if(overCircleButton(width - 40, 40, 60) == true) { exit(); } 
     
-    if(overCircleButton(x-15, height-650+120, 40) == true)
+    //odabir autica
+    if(overCircleButton(x, y, 40) == true)
     {
       idOdabirAutica--;
       if(idOdabirAutica<0) idOdabirAutica = 0;
-      //if(idOdabirAutica > brojAutica-1) idOdabirAutica = brojAutica-1;
       playGame = new PlayGame();
     }
-    else if(overCircleButton(width-(height-650+120), height-650+120, 40) == true)
+    else if(overCircleButton(width - y + 25, y, 40) == true)
     {
       idOdabirAutica++;
-      //if(idOdabirAutica<0) idOdabirAutica = 0;
       if(idOdabirAutica > brojAutica-1) idOdabirAutica = brojAutica-1; 
       playGame = new PlayGame();
+    }
+    
+    //glazba
+    else if(mouseX >= x + 75 && mouseX <= x + 75 + width/8 && mouseY >= y + 2.5 * spaceBetweenButtons && mouseY <= y + 2.5 * spaceBetweenButtons + buttonHeight){
+      if(musicOn == true) musicOn = false;
+      else if(musicOn == false) musicOn = true;
     }
 
   }

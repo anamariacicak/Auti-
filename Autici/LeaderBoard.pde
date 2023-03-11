@@ -1,17 +1,20 @@
 class LeaderBoard
 {
   
+  boolean flagMusic;
+  
   void drawLeadBoard()
   {
-
-    //background(255);
+    
     backgroundImage.resize(550,750);
     background(backgroundImage);
+    
+    flagMusic = true;
     
     fill(0);
     textSize(20);
     textAlign(CENTER);
-    text("LEADERBOARD", width/2, 50);
+    text("POREDAK", width/2, 50);
 
     String[] lines;
     lines = loadStrings("leaderboard.txt");
@@ -22,6 +25,7 @@ class LeaderBoard
       int score1 = Integer.parseInt(s1.split(" ")[0].trim());
       int score2 = Integer.parseInt(s2.split(" ")[0].trim());
       return score2 - score1;
+    
     }
     };
     Arrays.sort(lines,  cmp);

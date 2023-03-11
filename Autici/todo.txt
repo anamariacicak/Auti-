@@ -5,3 +5,5 @@
 //dodati vise prepreka
 //pogledati to do u kodu
 //levele mozemo mjeriti na osnovu scorea
+
+//raspaviti treba li na home biti izlaz ili x kao posvuda
