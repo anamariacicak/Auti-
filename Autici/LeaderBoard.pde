@@ -1,15 +1,12 @@
 class LeaderBoard
 {
   
-  boolean flagMusic;
   
   void drawLeadBoard()
   {
     
     backgroundImage.resize(550,750);
     background(backgroundImage);
-    
-    flagMusic = true;
     
     fill(0);
     textSize(20);
@@ -32,7 +29,6 @@ class LeaderBoard
     
     textSize(16);
     textAlign(CENTER);
-    
     for (int i = 0; i < lines.length && i <= 15; i++) {
       String[] parts = lines[i].split(" ");
       int scoree = Integer.parseInt(parts[0].trim());

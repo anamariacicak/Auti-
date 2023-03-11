@@ -28,9 +28,9 @@ class Home
     backgroundImage.resize(550,750);
     background(backgroundImage);
     
-    if(flagMusic == true){
+    if(flagMusic == true && musicOn == true){
       flagMusic = false;
-      backgroundMusic.loop();
+      //tombackgroundMusic.loop();
     }
     
     fill(#0000FF);
@@ -48,7 +48,7 @@ class Home
   {
     boolean mouseXCoordinate =  mouseX >= x && mouseX <= x + buttonWidth;
     if(mouseXCoordinate && mouseY >= y + 0*spaceBetweenButtons && mouseY <= y + buttonHeight + 0*spaceBetweenButtons) { //Nova igra
-      backgroundMusic.stop(); //treba li mi uvjet musicOn==true jer sta ako je netko promijenio u settingsima
+      //tombackgroundMusic.stop(); //treba li mi uvjet musicOn==true jer sta ako je netko promijenio u settingsima
       isHome=false; 
       isPlayGame = true; 
       playGame = new PlayGame();

@@ -23,12 +23,13 @@ class GameOver
   void drawGameOver() //screen koji se prikazuje kada je igra gotova
   {
     
-    if(flagMusic == true){
+    if(flagMusic == true && musicOn == true){
       flagMusic = false;
-      backgroundMusic.loop();
+      //tombackgroundMusic.loop();
     }
     
     //sto sve treba odraditi u pozadini - > nova igra, zapis u leaderboard, prekid glazbe,...
+    //score=round(score);
     background(255);
     backgroundImage.resize(550,750);
     background(backgroundImage);
@@ -36,14 +37,11 @@ class GameOver
     textAlign(CENTER, TOP);
     fill(#0000FF);
     text("GAME OVER!", width/2, height - 650);
-
-    //gameOver.drawGameOver();
-    //gameMusic.stop(); //MUSIC
     
     //textbox
     drawButton(playerName, x,  y,  buttonWidth, false);
     
-    //dva gumba - > play again, home, i exit   //TO DO da unese ime za leaderboard i modifikacija leadboarda, play again, dolje standarno dva kruga
+    //dva gumba - > play again, home, i exit   
     drawButtons(labelsForButtons, x, y+spaceBetweenButtons); 
     drawExitButton();
 
@@ -57,7 +55,7 @@ class GameOver
         playerName += key; // add key to text input
       }
       else if (key == BACKSPACE && playerName.length() > 0) { // check if backspace key pressed and text input is not empty
-      playerName = playerName.substring(0, playerName.length()-1); // remove last character from text input
+        playerName = playerName.substring(0, playerName.length()-1); // remove last character from text input
       }
     }
   
@@ -69,33 +67,28 @@ class GameOver
   {
     
     boolean mouseXCoordinate =  mouseX >= x && mouseX <= x + buttonWidth;
-    if(mouseXCoordinate && mouseY >= y + 1*spaceBetweenButtons && mouseY <= y + buttonHeight + 1*spaceBetweenButtons) //play again
+    if(mouseXCoordinate && mouseY >= y + 1*spaceBetweenButtons && mouseY <= y + buttonHeight + 1*spaceBetweenButtons) //Nova igra
     { 
-      //TO dodati potvrdu spremanja hs
       //zapis leaderboar
-      leaderBoardTxt(); 
+      leaderBoardTxt();
+      
+      //tombackgroundMusic.stop();
       isPlayGame = true; //prilikom gameovera treba inicijalizirati novu igru    
       playGame = new PlayGame();
-      isGameOver=false; 
-      //gameOver = new GameOver(); 
+      isGameOver = false; 
     } 
     
-    else if(mouseXCoordinate && mouseY >= y + 2*spaceBetweenButtons && mouseY <= y + buttonHeight + 2*spaceBetweenButtons) //home
+    else if(mouseXCoordinate && mouseY >= y + 2*spaceBetweenButtons && mouseY <= y + buttonHeight + 2*spaceBetweenButtons) //Izbornik
     { 
-      //TO dodati potvrdu spremanja hs
       //zapis leaderboard
       leaderBoardTxt(); 
        
-      isHome = true; //prilikom gameovera treba inicijalizirati novu igru    
-      playGame = new PlayGame(); 
-      isGameOver=false; 
-      //gameOver = new GameOver(); 
-      
+      isHome = true;   
+      isGameOver=false;    
     } 
     
-    //else if(mouseXCoordinate && mouseY >= y + 2*spaceBetweenButtons && mouseY <= y + buttonHeight + 3*spaceBetweenButtons) { leaderBoardTxt(); exit(); } //exit
+    //else if(mouseXCoordinate && mouseY >= y + 2*spaceBetweenButtons && mouseY <= y + buttonHeight + 3*spaceBetweenButtons) { leaderBoardTxt(); exit(); } //exit //TO DO obrisati
     else if(overCircleButton(width - 40, 40, 60) == true) { //exit //TO DO nije potreban writeOnLeaderBoard- jedino kasnije ako cemo omoguciti ok
-      //TO dodati potvrdu spremanja hs
       //zapis leaderboard
       leaderBoardTxt(); 
       exit(); 

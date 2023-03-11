@@ -20,9 +20,11 @@ class PlayGame
   int carCoordinateX, carCoordinateY;
   float carSpeed;
   boolean flagMusic; //za glazbu
+  long startTime ;
   
   PlayGame()
   {
+    //startTime = millis();
     //pocetak igre
     playerName = "player";
     score=0;
@@ -69,9 +71,9 @@ class PlayGame
   {
     
     
-    if(flagMusic == true){
+    if(flagMusic == true && musicOn == true){
       flagMusic = false;
-      playGameMusic.loop();
+      //tomplayGameMusic.loop();
     }
     
     //pozadina
@@ -88,17 +90,18 @@ class PlayGame
       
     //PREPREKE - koordinate i kretanje te provjera je li se autic sudario
     //prepreke
-    obstacleSpeed += 0.00000000000000000000000001; //TO DO brzina se mijenja u odnosu na vrijeme
+    //obstacleSpeed += millis()/1000 * 0.00001; //TO DO brzina se mijenja u odnosu na vrijeme
     drawAndCheckObstacles();
     
-    // Display the score
+    // bodovi
     fill(0);
     textSize(20);
-    text("Score: " + score, 70, 30);
+    text("Score: " + round(score), 70, 30);
+    
     
     // TO DO mijenja se u odnosu na vrijeme
-    score++;
-    
+    score = score + round(millis()/1000 * 0.001);
+   
     //GUMB za povratak na home i exit 
     drawBackButton();
     drawExitButton();
@@ -125,15 +128,14 @@ class PlayGame
     for(int i=0; i<numOfObstaclesOnScreen; i++) //
     {
       image(obstacleImages[int(random(0, numOfObstacles)) ], obstacleCoordinateX[i], obstacleCoordinateY[i], 45, 45); //ovo uzrokuje praznocu na screenu, ne treba ih sve odjednom inicijalizirati 
-      
       //JE LI GAME OVER?
-      if (dist(carCoordinateX, carCoordinateY,  obstacleCoordinateX[i], obstacleCoordinateY[i]) < 45/2 + 25) { //45 je obstacleSize
+      if(dist(carCoordinateX + 75/2, carCoordinateY +75/2, obstacleCoordinateX[i]+45/2, obstacleCoordinateY[i]+45/2)<sqrt(sq(45)+sq(45))/2 + 15){  //dodir dviju kruznica - modificiran s obzirom koliko blizinu autica dopustamo
+        
         background(255);
         isPlayGame = false;
-        playGameMusic.stop();
+        //tomplayGameMusic.stop();
         isGameOver = true;
         gameOver = new GameOver();
-        
         
       }
     }
@@ -155,10 +157,11 @@ class PlayGame
   {
     if(overCircleButton(40, height - 40, 60) == true) //gumb za back
     { 
-      //MUSIC gameMusic.stop();
-      isHome = true;
+      //tomplayGameMusic.stop();
       isPlayGame = false;
       playGame = new PlayGame();
+      isHome = true;
+      home = new Home();
     }
     else if(overCircleButton(width - 40, 40, 60) == true) { exit(); }
   }

@@ -4,7 +4,7 @@ import java.io.*;
 import java.lang.*;
 import java.util.*;
 
-SoundFile backgroundMusic, playGameMusic;
+//tomSoundFile backgroundMusic, playGameMusic;
 
 PImage backgroundImage;
 
@@ -43,8 +43,8 @@ void setup()
   
   //glazba
   //play, loop, pause
-  backgroundMusic = new SoundFile(this, "background_music.mp3");
-  playGameMusic = new SoundFile(this, "playGame_music.mp3");
+  //tombackgroundMusic = new SoundFile(this, "background_music.mp3");
+  //tomplayGameMusic = new SoundFile(this, "playGame_music.mp3");
   
   //background
   backgroundImage = loadImage("cesta2.jpg");
@@ -56,12 +56,6 @@ void setup()
 
   //home
   home = new Home(); 
-  
-  //play
-  //playGame = new PlayGame();
-  
-  //gameOver
-  //gameOver = new GameOver();
   
   //settings
   settings = new Settings();
@@ -258,15 +252,3 @@ void leaderBoardTxt()
   writer.close(); // Close the file*/    
 
 }
-
-
-//TO DO
-//testirati glazbu
-//pogledati to do u kodu
-//bugovi PlayGame - obstacleSpeed(carSpeed) i score - pogledati TO DO u playGame
-//dodati vise prepreka
-//prepreke promijenjive velicine
-//razlicita pozadina od pozadine u igrici
-//igrac moze upisati svoje ime prije zapisi scorea - potvrda toga
-//levele mozemo mjeriti na osnovu scorea
-//dodati jos prepreka, razlicita velicina prepreka

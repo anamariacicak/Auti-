@@ -8,6 +8,7 @@ class Settings
   {
    y = height - 650 + 120;
    x = (width - y + 150) /3;
+   flagMusic = true;
   }
 
   void drawSettings()
@@ -15,8 +16,11 @@ class Settings
     
     backgroundImage.resize(550,750);
     background(backgroundImage);
-    
-    flagMusic = true;
+       
+    if(flagMusic == true && musicOn == true){
+      flagMusic = false;
+      //tombackgroundMusic.loop();
+    }
     
     //odabir autica
     drawButton("Autic", x + 10, height - 650, width/3, false);
@@ -87,8 +91,8 @@ class Settings
   {
     if(overCircleButton(40, height - 40, 60) == true) //gumb za back
     { 
-      //MUSIC BACKGORUNDMusic.stop();
       isHome = true;
+      //home = new Home();
       isSettings = false;
     }
     else if(overCircleButton(width - 40, 40, 60) == true) { exit(); } 
@@ -109,8 +113,14 @@ class Settings
     
     //glazba
     else if(mouseX >= x + 75 && mouseX <= x + 75 + width/8 && mouseY >= y + 2.5 * spaceBetweenButtons && mouseY <= y + 2.5 * spaceBetweenButtons + buttonHeight){
-      if(musicOn == true) musicOn = false;
-      else if(musicOn == false) musicOn = true;
+      if(musicOn == true) {
+        musicOn = false;
+        //tombackgroundMusic.stop();
+      }
+      else if(musicOn == false){
+        musicOn = true;
+        flagMusic = true;
+      }
     }
 
   }
