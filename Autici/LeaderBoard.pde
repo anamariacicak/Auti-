@@ -34,7 +34,7 @@ class LeaderBoard
       int scoree = Integer.parseInt(parts[0].trim());
       String name = String.valueOf(parts[1]);
       String date = String.valueOf(parts[2]);
-      if(i==lines.length) name = playerName;
+      //if(i==lines.length) name = playerName;
       text((i+1) + ". "  + name + " - " + scoree + " " + date, width/2, 100 + i*45);
     }
 
@@ -48,7 +48,6 @@ class LeaderBoard
   {
     if(overCircleButton(40, height-40, 60) == true) //gumb za back
     {
-      //MUSIC BACKGORUNDMusic.stop();
       isHome = true;
       isLeaderBoard = false;
     }

@@ -30,7 +30,7 @@ class Home
     
     if(flagMusic == true && musicOn == true){
       flagMusic = false;
-      //tombackgroundMusic.loop();
+      backgroundMusic.loop();
     }
     
     fill(#0000FF);
@@ -48,7 +48,7 @@ class Home
   {
     boolean mouseXCoordinate =  mouseX >= x && mouseX <= x + buttonWidth;
     if(mouseXCoordinate && mouseY >= y + 0*spaceBetweenButtons && mouseY <= y + buttonHeight + 0*spaceBetweenButtons) { //Nova igra
-      //tombackgroundMusic.stop(); //treba li mi uvjet musicOn==true jer sta ako je netko promijenio u settingsima
+      backgroundMusic.stop(); 
       isHome=false; 
       isPlayGame = true; 
       playGame = new PlayGame();

@@ -19,7 +19,7 @@ class Settings
        
     if(flagMusic == true && musicOn == true){
       flagMusic = false;
-      //tombackgroundMusic.loop();
+      backgroundMusic.loop();
     }
     
     //odabir autica
@@ -115,7 +115,7 @@ class Settings
     else if(mouseX >= x + 75 && mouseX <= x + 75 + width/8 && mouseY >= y + 2.5 * spaceBetweenButtons && mouseY <= y + 2.5 * spaceBetweenButtons + buttonHeight){
       if(musicOn == true) {
         musicOn = false;
-        //tombackgroundMusic.stop();
+        backgroundMusic.stop();
       }
       else if(musicOn == false){
         musicOn = true;

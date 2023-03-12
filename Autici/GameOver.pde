@@ -25,7 +25,7 @@ class GameOver
     
     if(flagMusic == true && musicOn == true){
       flagMusic = false;
-      //tombackgroundMusic.loop();
+      backgroundMusic.loop();
     }
     
     //sto sve treba odraditi u pozadini - > nova igra, zapis u leaderboard, prekid glazbe,...
@@ -50,12 +50,12 @@ class GameOver
   
   void keyPressed()
   {
-    if (key >= 'A' && key <= 'Z' || key >= 'a' && key <= 'z' || key == ' ' || key == BACKSPACE) { // check for valid input keys
-      if (textWidth(playerName) < buttonWidth - 70 && key != BACKSPACE) { // check if text fits in box and key is not backspace
-        playerName += key; // add key to text input
+    if (key >= 'A' && key <= 'Z' || key >= 'a' && key <= 'z' || key == ' ' || key == BACKSPACE) { 
+      if (textWidth(playerName) < buttonWidth - 70 && key != BACKSPACE) { // stane li tekst u textbox
+        playerName += key; // dodaj u ime
       }
-      else if (key == BACKSPACE && playerName.length() > 0) { // check if backspace key pressed and text input is not empty
-        playerName = playerName.substring(0, playerName.length()-1); // remove last character from text input
+      else if (key == BACKSPACE && playerName.length() > 0) { // ako je pritisnut backspace i nije prazno
+        playerName = playerName.substring(0, playerName.length()-1);
       }
     }
   
@@ -72,7 +72,7 @@ class GameOver
       //zapis leaderboar
       leaderBoardTxt();
       
-      //tombackgroundMusic.stop();
+      backgroundMusic.stop();
       isPlayGame = true; //prilikom gameovera treba inicijalizirati novu igru    
       playGame = new PlayGame();
       isGameOver = false; 
@@ -87,7 +87,6 @@ class GameOver
       isGameOver=false;    
     } 
     
-    //else if(mouseXCoordinate && mouseY >= y + 2*spaceBetweenButtons && mouseY <= y + buttonHeight + 3*spaceBetweenButtons) { leaderBoardTxt(); exit(); } //exit //TO DO obrisati
     else if(overCircleButton(width - 40, 40, 60) == true) { //exit //TO DO nije potreban writeOnLeaderBoard- jedino kasnije ako cemo omoguciti ok
       //zapis leaderboard
       leaderBoardTxt(); 

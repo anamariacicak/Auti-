@@ -4,7 +4,7 @@ import java.io.*;
 import java.lang.*;
 import java.util.*;
 
-//tomSoundFile backgroundMusic, playGameMusic;
+SoundFile backgroundMusic, playGameMusic;
 
 PImage backgroundImage;
 
@@ -43,8 +43,8 @@ void setup()
   
   //glazba
   //play, loop, pause
-  //tombackgroundMusic = new SoundFile(this, "background_music.mp3");
-  //tomplayGameMusic = new SoundFile(this, "playGame_music.mp3");
+  backgroundMusic = new SoundFile(this, "background_music.mp3");
+  playGameMusic = new SoundFile(this, "playGame_music.mp3");
   
   //background
   backgroundImage = loadImage("cesta2.jpg");
@@ -145,11 +145,11 @@ void drawButtons(String[] labelsForButtons, int x, int y)
       strokeWeight(0);
       boolean mouseOver = mouseX >= x && mouseX <= x + buttonWidth && mouseY >= y + i*spaceBetweenButtons && mouseY <= y + buttonHeight + i*spaceBetweenButtons;
       fill(mouseOver ? #0000FF : #00BFFF);
-      rect(x, y + i*spaceBetweenButtons, buttonWidth, buttonHeight);
+      rect(x, y + i * spaceBetweenButtons, buttonWidth, buttonHeight);
       fill(0);
       textAlign(CENTER, CENTER);
       textSize(24);
-      text(labelsForButtons[i], x + buttonWidth / 2, y + buttonHeight / 2  + i*spaceBetweenButtons);
+      text(labelsForButtons[i], x + buttonWidth / 2, y + buttonHeight / 2  + i * spaceBetweenButtons);
       popMatrix();
     }   
    
@@ -170,7 +170,7 @@ void drawButton(String labelForButton, float x, float y, int buttonWidth, boolea
     fill(0);
     textAlign(CENTER, CENTER);
     textSize(24);
-    text(labelForButton, x + buttonWidth / 2, y + buttonHeight / 2  + 0*spaceBetweenButtons);
+    text(labelForButton, x + buttonWidth / 2, y + buttonHeight / 2  + 0 * spaceBetweenButtons);
     popMatrix();
     
 }
@@ -240,15 +240,15 @@ boolean overCircleButton(float x, float y, float diam)
 void leaderBoardTxt()
 {
   String[] lines;
-  String data = score + " "  + playerName + " " + day()+"/"+month()+"/"+year()+"-"+hour()+":"+minute()+":"+second(); // The string you want to store
+  String data = score + " "  + playerName + " " + day()+"."+month()+"."+year()+".-"+hour()+":"+minute()+":"+second(); //string koji zelimo dodati u datoteku 
   lines = loadStrings("leaderboard.txt");   
-  PrintWriter writer = createWriter("leaderboard.txt"); // Create a new text file
+  PrintWriter writer = createWriter("leaderboard.txt"); // novi text file
   for(int i = 0; i < lines.length  ; i++){
-      String[] spl = split(lines[i],"\n"); //splitanje novog reda"
+      String[] spl = split(lines[i],"\n"); //splitanje novog reda
       writer.println(String.valueOf(spl[0]));;
   }
   writer.println(data);
-  writer.flush(); // Flush the output to the file
-  writer.close(); // Close the file*/    
+  writer.flush(); 
+  writer.close(); // zatvori  
 
 }
