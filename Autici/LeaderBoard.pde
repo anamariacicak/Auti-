@@ -30,12 +30,7 @@ class LeaderBoard
     textSize(16);
     textAlign(CENTER);
     for (int i = 0; i < lines.length && i <= 15; i++) {
-      String[] parts = lines[i].split(" ");
-      int scoree = Integer.parseInt(parts[0].trim());
-      String name = String.valueOf(parts[1]);
-      String date = String.valueOf(parts[2]);
-      //if(i==lines.length) name = playerName;
-      text((i+1) + ". "  + name + " - " + scoree + " " + date, width/2, 100 + i*45);
+      text((i+1) + ". "  + lines[i], width/2, 100 + i*45);
     }
 
  
