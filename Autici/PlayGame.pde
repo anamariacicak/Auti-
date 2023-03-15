@@ -91,8 +91,8 @@ class PlayGame
     textSize(20);
     text("Score: " + round(score), 70, 30);
     
-    score = score + round(millis()/1000*0.01);
-    //score++;
+    
+    score++;
    
     //GUMB za povratak na home i exit 
     drawBackButton();
